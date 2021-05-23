@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>test</button>
+    <script src="../../../dist/promise/index.js"></script>
+</body>
+<script>
+
+
+    let gp1 = new _Promise(r => {
+        setTimeout(() => {
+            r(1)
+        }, 1000);
+    })
+
+    let gp2 = new _Promise(r => {
+        setTimeout(() => {
+            r(2)
+        }, 1000);
+    })
+
+
+    function* gen() {
+        let a = yield gp1
+        let b = yield gp2
+        return b + a
+    }
+
+
+
+    function run(gen) {
+        return new _Promise(function (resolve, reject) {
+            g = gen()
+            function next(v) {
+                ret = g.next(v)
+                if (ret.done) return resolve(ret.value);
+                _Promise.resolve(ret.value).then(next)
+            }
+            next()
+        })
+    }
+
+
+    run(gen).then(r => {
+        console.log(r);
+    })
+
+</script>
+
+</html>

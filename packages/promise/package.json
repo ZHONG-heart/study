@@ -1,0 +1,22 @@
+{
+  "name": "promise",
+  "version": "0.0.0",
+  "description": "promise",
+  "keywords": [
+    "promise"
+  ],
+  "author": "zhong <zhong_heart@163.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/promise.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}

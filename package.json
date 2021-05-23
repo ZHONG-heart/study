@@ -1,0 +1,27 @@
+{
+  "name": "study",
+  "private": true,
+  "devDependencies": {
+    "babel-loader": "^8.2.2",
+    "html-webpack-plugin": "^5.3.1",
+    "lerna": "^3.22.1",
+    "promises-aplus-tests": "^2.1.2",
+    "ts-loader": "^9.1.2",
+    "typescript": "^4.2.4",
+    "webpack": "^5.37.0",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "version": "1.0.0",
+  "description": "...",
+  "main": "./dist/promise/index.js",
+  "scripts": {
+    "test": "promises-aplus-tests ./dist/promise/index.js",
+    "watch": "tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "asap": "^2.0.6"
+  }
+}
