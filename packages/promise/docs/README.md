@@ -12,7 +12,7 @@
 `Promise` 的内部状态改变如图所示：
 
 
-![image.png](./promise-resolve-reject.png)
+![image.png](./images/promise-resolve-reject.png)
 
 
 ## Promise的出现解决了什么问题
@@ -582,7 +582,7 @@ module.exports = _Promise;
 4.执行 `yarn test`
 
 
-![image.png](./test.png)
+![image.png](./images/test.png)
 
 可以看到872个测试用例全部通过。
 
