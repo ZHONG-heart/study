@@ -10,11 +10,20 @@
 
 <body>
     <button>test</button>
-    <script src="../../../dist/promise/index.js"></script>
 </body>
-<script>
+<script type="module">
+    import { _Promise } from '../../../dist/promise/example/index.js'
+    console.log('first')
+    const p1 = new _Promise(function (resolve) {
+        console.log('second')
+        resolve('third')
+    })
+    p1.then(console.log)
+    console.log('fourth')
 
-
+    let p2 = new _Promise(function (resolve, reject) {
+        reject('reject')
+    })
     let gp1 = new _Promise(r => {
         setTimeout(() => {
             r(1)
@@ -27,6 +36,9 @@
         }, 1000);
     })
 
+
+
+    _Promise.allSettled([p1, p2]).then(console.log)
 
     function* gen() {
         let a = yield gp1

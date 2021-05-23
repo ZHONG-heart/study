@@ -16,7 +16,7 @@
   "description": "...",
   "main": "./dist/promise/index.js",
   "scripts": {
-    "test": "promises-aplus-tests ./dist/promise/index.js",
+    "test": "promises-aplus-tests ./dist/promise/src/index.js",
     "watch": "tsc -w"
   },
   "author": "",

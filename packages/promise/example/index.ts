@@ -1,17 +1,13 @@
-
-import * as fs from 'fs'
-
 enum PROMISE_STATUS {
     PENDING,
     FULFILLED,
     REJECTED
 }
 
-
 class _Promise<T> {
     private status = PROMISE_STATUS.PENDING
     private value: T
-    callbacks = []
+    private callbacks = []
     constructor(executor: (resolve: (value: T) => void, reject: (reason: any) => void) => void) {
         executor(this._resolve, this._reject)
     }
@@ -155,39 +151,60 @@ class _Promise<T> {
         });
     }
 
-    static race(arr) {
+    static race(promises) {
         return new _Promise(function (resolve, reject) {
-            if (!Array.isArray(arr)) {
+            if (!Array.isArray(promises)) {
                 return reject(new TypeError('Promise.race accepts an array'));
             }
-            for (var i = 0, len = arr.length; i < len; i++) {
-                _Promise.resolve(arr[i]).then(resolve, reject);
+            for (var i = 0, len = promises.length; i < len; i++) {
+                _Promise.resolve(promises[i]).then(resolve, reject);
             }
         });
 
     }
 
     static all(promises) {
-        let arr = [];
+        let result = [];
         let i = 0;
 
         return new _Promise((resolve, reject) => {
-            const processData = (index, data) => {
-                arr[index] = data;
+            const processValue = (index, value) => {
+                result[index] = value;
                 i++;
                 if (i == promises.length) {
-                    resolve(arr);
+                    resolve(result);
                 };
             };
-            for (let i = 0; i < promises.length; i++) {
-                promises[i].then(data => {
-                    processData(i, data);
+            for (let index = 0; index < promises.length; index++) {
+                promises[index].then(value => {
+                    processValue(index, value);
                 }, reject);
             };
         });
     }
 
+    static allSettled(promises) {
+        let result = []
+        let i = 0;
+        return new _Promise((resolve, reject) => {
+            const processValue = (index, value, status: 'fulfilled' | 'rejected') => {
+                result[index] = { status, value }
+                i++;
+                if (i == promises.length) {
+                    resolve(result);
+                };
+            };
 
+
+            for (let index = 0; index < promises.length; index++) {
+                promises[index].then(value => {
+                    processValue(index, value, 'fulfilled')
+                }, value => {
+                    processValue(index, value, 'rejected')
+                });
+            };
+        })
+    }
 }
 
 (_Promise as any).deferred = function () {
@@ -199,5 +216,6 @@ class _Promise<T> {
     return dfd;
 }
 
-module.exports = _Promise;
-export { }
+// module.exports = _Promise;
+
+export { _Promise }

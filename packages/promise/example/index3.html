@@ -9,8 +9,8 @@
 </head>
 
 <body>
-    <script src="../../../dist/promise/index3.js"></script>
-    <script>
+    <script type="module">
+        import { _Promise } from '../../../dist/promise/example/index3.js'
         const p1 = new _Promise((resolve, reject) => {
             resolve(1)
         })
@@ -33,14 +33,12 @@
         const p3 = new _Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(3)
-
             }, 1000);
         })
 
         p3.then(res => {
             console.log(res, 'then ok3.1')
-
-            return xxxxx
+            return '链式调用'
         }).then(res => {
             console.log(res, 'then ok3.2')
         })

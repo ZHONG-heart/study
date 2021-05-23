@@ -4,17 +4,10 @@ enum PROMISE_STATUS {
     REJECTED
 }
 
-interface ICallback<T> {
-    onfulfilled: (value: T) => void;
-    onrejected: (value: any) => void
-}
-
-
-
 class _Promise<T> {
     private status = PROMISE_STATUS.PENDING
     private value: T
-    callbacks = []
+    private callbacks = []
     constructor(executor: (resolve: (value: T) => void, reject: (reason: any) => void) => void) {
         executor(this._resolve, this._reject)
     }
@@ -71,17 +64,17 @@ class _Promise<T> {
 
     private _resolvePromise = <T>(nextPromise: _Promise<T>, x: any, resolve, reject) => {
 
-        // 2.3.1 
+        // 2.3.1 nextPromise 不能和 x 相等
         if (nextPromise === x) {
             return reject(new TypeError('The promise and the return value are the same'));
         }
 
-        // 2.3.2
+        // 2.3.2 如果 x 是 Promise 返回 x 的状态和值
         if (x instanceof _Promise) {
             x.then(resolve, reject)
         }
 
-        // 2.3.3
+        // 2.3.3 如果 x 是对象或者函数执行 if 里面的逻辑
         if (typeof x === 'object' || typeof x === 'function') {
             if (x === null) {
                 return resolve(x);
@@ -97,11 +90,13 @@ class _Promise<T> {
 
             // 2.3.3.3
             if (typeof then === 'function') {
+                // 声明called 在调用过一次resolve或者reject之后，修改为true，保证只能调用一次
                 let called = false;
                 try {
                     then.call(x, y => {
                         if (called) return; // 2.3.3.3.4.1
                         called = true;
+                        // 递归解析的过程（因为可能 promise 中还有 promise）
                         this._resolvePromise(nextPromise, y, resolve, reject)
                     }, r => {
                         if (called) return; // 2.3.3.3.4.1
@@ -127,16 +122,6 @@ class _Promise<T> {
 }
 
 
-(_Promise as any).deferred = function () {
-    let dfd = {} as any;
-    dfd.promise = new Promise((resolve, reject) => {
-        dfd.resolve = resolve;
-        dfd.reject = reject;
-    });
-    return dfd;
-}
-
-module.exports = _Promise;
 
 
-export { }
+export { _Promise }

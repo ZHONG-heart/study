@@ -9,8 +9,9 @@
 </head>
 
 <body>
-    <script src="../../../dist/promise/index1.js"></script>
-    <script>
+    <script type="module">
+
+        import { _Promise } from '../../../dist/promise/example/index1.js'
         const p1 = new _Promise((resolve, reject) => {
             resolve(2)
         })
