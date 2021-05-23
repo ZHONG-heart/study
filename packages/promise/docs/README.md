@@ -3,7 +3,7 @@
 
 ## 什么是Promise 
 
-`Promise`的核心思想是`Promise`表示异步操作的结果。一个`Promise`处于一下三种状态之一：
+`Promise`的核心思想是`Promise`表示异步操作的结果。一个`Promise`处于以下三种状态之一：
 
    * `pending` - `Promise` 的初始化状态
    * `fulfilled` - 表示 `Promise` 成功操作的状态
@@ -80,7 +80,7 @@ readFile('./data.txt').then((data) => {
 
 * `Promise` 状态 「Promise/A+ 2.1」
 
->`Promise` 必须处于一下三种状态之一：
+>`Promise` 必须处于以三种状态之一：
 >
 >`pending`（等待中），可以转换为 `fulfilled`（完成）或 `rejected`（拒绝）。
 >
@@ -99,7 +99,7 @@ readFile('./data.txt').then((data) => {
 >
 > 如果 `onRejected` 是一个函数，则它必须在 `Promise` 的状态为 rejected（失败）时调用，并把失败的原因传入它的第一个参数。只能被调用一次。
 
-既然知道了需要实现那些功能，那就来动手操作一下，代码如下：
+既然知道了需要实现哪些功能，那就来动手操作一下，代码如下：
 
 
 ```typescript
